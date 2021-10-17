@@ -1,0 +1,22 @@
+{
+  "uuid": {
+    "items": [
+      {
+        "name": "iPhone",
+        "cost": 1200,
+        "dateAdded": "2013-03-01T01:10:00",
+        "inBudgetList": true,
+        "favorite": true
+      },
+      {
+        "name": "AirPods",
+        "cost": 300,
+        "dateAdded": "2013-03-01T01:10:00",
+        "inBudgetList": false,
+        "favorite": true
+      }
+    ],
+    "montlyIncome": 700,
+    "montlyExpenses": 100
+  }
+}

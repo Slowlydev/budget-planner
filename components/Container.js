@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { motion } from "framer-motion";
 import { useEffect } from "react";
 
 import Header from "./Header";
@@ -11,14 +10,18 @@ export default function Container(props) {
 
 	useEffect(() => {
 		router.prefetch("/");
-		router.prefetch("/account");
+		router.prefetch("/overview");
 	});
 
 	return (
-		<div className="container">
+		<div>
 			<Header />
-			<Navbar />
-      {props.children}
+			{props.navbar && (
+				<Navbar />
+			)}
+			<div className="container">
+				{props.children}
+			</div>
 		</div>
 	)
 }
