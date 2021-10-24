@@ -59,25 +59,22 @@ export default function Overview(props) {
     return (
       <Container navbar>
         <h1>Welcome back!</h1>
-        <p>Here u can see your favorite items and your recently added items, u should deffinitly visit the settings page</p>
+        <p>Here u can see your favorite items and your recently added items, u should definitly visit the settings page</p>
         <div className="row">
           <Link href="/settings">
             <a>
               <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Settings</motion.button>
             </a>
           </Link>
-          <motion.button onClick={signOut} className="red" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Logut</motion.button>
+          <motion.button onClick={signOut} className="red" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Logout</motion.button>
         </div>
-        <div className="vertical">
-          <h2>Favorites</h2>
+        <h2>Favorites</h2>
           {favorites.slice(0, 4).map(item => (
             <div className="item">
               <p>{item.name}</p>
               <p className="number">{item.cost}</p>
             </div>
           ))}
-        </div>
-        <div className="vertical">
           <h2>Recents</h2>
           {recents.slice(0, 4).map(item => (
             <div className="item">
@@ -85,7 +82,6 @@ export default function Overview(props) {
               <p className="number">{item.cost}</p>
             </div>
           ))}
-        </div>
       </Container>
     )
   } else {

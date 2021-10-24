@@ -36,8 +36,7 @@ export default function Overview(props) {
   }
 
   function calculateMonth(cost) {
-    const sparquote = data.montlyIncome - data.montlyExpenses;
-    const nMonate = cost / sparquote;
+    const nMonate = cost / data.savings;
 
     return Number.parseFloat(nMonate).toPrecision(2);
   }

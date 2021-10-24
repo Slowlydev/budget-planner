@@ -59,6 +59,8 @@ export default function Login() {
         </Link>
       </div>
 
+      <a>new password</a>
+
       {errorMsg && (
         <p>{errorMsg}</p>
       )}

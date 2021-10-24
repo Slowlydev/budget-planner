@@ -17,19 +17,19 @@ export default function Header(props) {
 			<meta property="og:title" content="Budget Planner" />
 			<meta property="og:site_name" content="Budget Planner" />
 			<meta property="og:description" content="Plann your montly budget" />
-			<meta property="og:image" content="/logo_nobg.png" />
+			<meta property="og:image" content="/logo.png" />
 			<meta property="og:url" content="https://budget-planner.vercel.app/" />
 			<meta property="og:type" content="website" />
 
 			<meta name="twitter:title" content="Budget Planner" />
 			<meta name="twitter:description" content="Plann your montly budget" />
-			<meta name="twitter:image" content="/logo_nobg.png" />
+			<meta name="twitter:image" content="/logo.png" />
 
 			<meta name="theme-color" content="#027fff" key="theme-color" />
 			<meta name="apple-mobile-web-app-capable" content="yes" key="apple-web-app-capable" />
 			<meta name="apple-mobile-web-app-status-bar-style" content="default" key="apple-status-bar" />
 
-			<link rel="shortcut icon" type="image/x-icon" href="/logo_nobg.png" key="shurtcut-icon" />
+			<link rel="shortcut icon" type="image/x-icon" href="/logo.png" key="shurtcut-icon" />
 			<link rel="apple-touch-icon" href="/logo.png" key="apple-touch-icon" />
 
 			<link rel="canonical" href="https://budget-planner.vercel.app"></link>

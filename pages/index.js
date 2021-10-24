@@ -16,9 +16,9 @@ export default function Home() {
 
   return (
     <Container>
-      <h1>Welcome to Budget-planner</h1>
+      <h1 className="welcome">Welcome to Budgetty</h1>
       {!user && (
-        <div>
+        <div className="text-center">
           <p>Looks like your not logged in, create or login to your account here!</p>
           <div className="row">
             <Link href="/login">
@@ -35,7 +35,7 @@ export default function Home() {
         </div>
       )}
       {user && (
-        <div>
+        <div className="text-center">
           <p>Looks like your loged in, wanna sign out or go to the overview?</p>
           <div className="row center">
             <Link href="/overview">
