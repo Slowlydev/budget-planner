@@ -60,14 +60,7 @@ export default function Overview(props) {
       <Container navbar>
         <h1>Welcome back!</h1>
         <p>Here u can see your favorite items and your recently added items, u should definitly visit the settings page</p>
-        <div className="row">
-          <Link href="/settings">
-            <a>
-              <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Settings</motion.button>
-            </a>
-          </Link>
-          <motion.button onClick={signOut} className="red" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Logout</motion.button>
-        </div>
+        <motion.button onClick={signOut} className="red" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Logout</motion.button>
         <h2>Favorites</h2>
         {favorites.map((item, index) => (
           <div className="item" key={index}>

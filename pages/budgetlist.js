@@ -25,7 +25,6 @@ export default function Overview(props) {
 
   useEffect(() => {
     firebase.database().ref(`users/${props.session}/`).on("value", function (returnedData) { try { setData(returnedData.val()) } catch (err) { console.log(err) } });
-
     if (data && data.montlyIncome) {
       setIncome(data.montlyIncome);
     }
@@ -64,23 +63,21 @@ export default function Overview(props) {
       <Container navbar>
         <h1>Budgetlist</h1>
         <p>To buy all items in your list u would have to save for {calculateMonth(totalItemsCost)} months!</p>
-        <div className="budgetlist-split">
-          {items.map((item, index) => (
-            <div className="item" key={index}>
-              <p>{item.name}</p>
-              <p className="number">{item.cost}</p>
-              <p>{calculateMonth(item.cost)} months</p>
-            </div>
-          ))}
-          <div className="side-bar">
-            <h2>Settings</h2>
-            <p>Monthly Income</p>
-            <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" whileFocus={{ scale: 1.1 }} />
-            <p>Monthly Expenses</p>
-            <motion.input onChange={(e) => setExpense(e.target.value)} value={expense} placeholder="Montly expenses" whileFocus={{ scale: 1.1 }} />
-            <motion.button onClick={update} disabled={!income || !expense} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Update</motion.button>
-          </div>
+        <div className="side-bar">
+          <h2>Settings</h2>
+          <p>Monthly Income</p>
+          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" whileFocus={{ scale: 1.1 }} />
+          <p>Monthly Expenses</p>
+          <motion.input onChange={(e) => setExpense(e.target.value)} value={expense} placeholder="Montly expenses" type="number" whileFocus={{ scale: 1.1 }} />
+          <motion.button onClick={update} disabled={!income || !expense} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Update</motion.button>
         </div>
+        {items.map((item, index) => (
+          <div className="item" key={index}>
+            <p>{item.name}</p>
+            <p className="number">{item.cost}</p>
+            <p>{calculateMonth(item.cost)} months</p>
+          </div>
+        ))}
       </Container>
     )
   } else {

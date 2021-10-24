@@ -84,9 +84,6 @@ export default function wishlist(props) {
         {wishlistitems.map(item => (
           <Item session={props.session} item={item} key={item.name} />
         ))}
-        {!wishlistitems && (
-          <p>no items ur whish to have found, go add some with the button above</p>
-        )}
         {popup && (
           <Popup toggle={togglePopup} session={props.session} />
         )}

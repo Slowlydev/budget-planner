@@ -190,7 +190,7 @@ form {
   width: 90%;
   max-width: 45em;
 
-  padding: 0.5em;
+  padding: 1em;
   margin: 0.5em;
 
   border-radius: 0.5em;
@@ -199,6 +199,19 @@ form {
 
   box-shadow: 0 1.4px 2.7px rgba(0, 0, 0, 0.028),
     0 4.7px 8.9px rgba(0, 0, 0, 0.042), 0 21px 40px rgba(0, 0, 0, 0.07);
+
+  input {
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+
+    text-align: center;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 0;
+  }
 }
 
 .item {
@@ -212,8 +225,8 @@ form {
   max-width: 45em;
 
   padding: 0.5em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
   margin: 0.5em;
 
   border-radius: 0.5em;
@@ -222,6 +235,10 @@ form {
 
   box-shadow: 0 1.4px 2.7px rgba(0, 0, 0, 0.028),
     0 4.7px 8.9px rgba(0, 0, 0, 0.042), 0 21px 40px rgba(0, 0, 0, 0.07);
+
+  button {
+    margin-right: 0;
+  }
 
   input {
     width: max-content;
@@ -296,17 +313,24 @@ form {
   .popup {
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    height: fit-content;
+    width: 90vw;
+    max-width: 35em;
 
     padding: 1em;
 
     border-radius: 0.5em;
 
-    width: 90vw;
-    max-width: 35em;
-
-    height: fit-content;
-
     background-color: var(--backgound);
+
+    box-shadow: 0 1.4px 2.7px rgba(0, 0, 0, 0.028),
+      0 4.7px 8.9px rgba(0, 0, 0, 0.042), 0 21px 40px rgba(0, 0, 0, 0.07);
+
+    button {
+      width: 100%;
+    }
 
     .header {
       h1 {
@@ -318,8 +342,13 @@ form {
       padding-top: 1em;
       padding-bottom: 1em;
 
-      input {
-        width: max-content;
+      .checks {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        padding-top: 1em;
+        padding-bottom: 1em;
       }
 
       label {
@@ -335,6 +364,7 @@ form {
         input {
           background: none;
           box-shadow: none;
+          width: max-content;
         }
       }
     }
@@ -344,13 +374,15 @@ form {
       flex-direction: row;
       justify-content: space-between;
 
-      button {
-        width: 50%;
-      }
-    }
+      width: 100%;
 
-    .button-fullsize {
-      width: 96%;
+      button {
+        margin: 0;
+      }
+
+      .splitter {
+        padding-left: 0.5em;
+      }
     }
   }
 }
