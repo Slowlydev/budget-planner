@@ -81,11 +81,12 @@ export default function wishlist(props) {
         <h1>Wishlist</h1>
         <p>Add Items that u would like to get and put then in your budgetlist. Also this is the place where u manage ur wishes/items</p>
         <motion.button onClick={togglePopup} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Add Item</motion.button>
-        <div>
-          {wishlistitems.map(item => (
-            <Item session={props.session} item={item} key={item.name} />
-          ))}
-        </div>
+        {wishlistitems.map(item => (
+          <Item session={props.session} item={item} key={item.name} />
+        ))}
+        {!wishlistitems && (
+          <p>no items ur whish to have found, go add some with the button above</p>
+        )}
         {popup && (
           <Popup toggle={togglePopup} session={props.session} />
         )}
@@ -104,7 +105,6 @@ export async function getServerSideProps(context) {
     const cookies = nookies.get(context);
     const token = await adminApp().auth().verifyIdToken(cookies.token);
     const { uid } = token;
-
     return {
       props: { session: uid }
     };

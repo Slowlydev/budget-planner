@@ -14,6 +14,9 @@ export default function Overview(props) {
 
   const [data, setData] = useState();
 
+  const [income, setIncome] = useState("");
+  const [expense, setExpense] = useState("");
+
   let totalItemsCost = 0;
 
   const addTotalCost = (value) => { totalItemsCost = totalItemsCost + value };
@@ -21,7 +24,14 @@ export default function Overview(props) {
   firebaseClient();
 
   useEffect(() => {
-    firebase.database().ref(`users/${props.session}/`).on("value", function (data) { try { setData(data.val()) } catch (err) { console.log(err) } });
+    firebase.database().ref(`users/${props.session}/`).on("value", function (returnedData) { try { setData(returnedData.val()) } catch (err) { console.log(err) } });
+
+    if (data && data.montlyIncome) {
+      setIncome(data.montlyIncome);
+    }
+    if (data && data.montlyExpenses) {
+      setExpense(data.montlyExpenses);
+    }
   }, []);
 
   const items = [];
@@ -35,24 +45,42 @@ export default function Overview(props) {
     }
   }
 
+  function update() {
+    firebase.database().ref(`users/${props.session}`).update({
+      montlyIncome: parseFloat(income),
+      montlyExpenses: parseFloat(expense)
+    });
+  }
+
   function calculateMonth(cost) {
-    const nMonate = cost / data.savings;
+    const sparquote = data.montlyIncome - data.montlyExpenses;
+    const nMonate = cost / sparquote;
 
     return Number.parseFloat(nMonate).toPrecision(2);
   }
 
-  if (props.session && data) {
+  if (props.session && data && data.items) {
     return (
       <Container navbar>
         <h1>Budgetlist</h1>
         <p>To buy all items in your list u would have to save for {calculateMonth(totalItemsCost)} months!</p>
-        {items.map(item => (
-          <div className="item" key={items.name}>
-            <p>{item.name}</p>
-            <p className="number">{item.cost}</p>
-            <p>{calculateMonth(item.cost)} months</p>
+        <div className="budgetlist-split">
+          {items.map((item, index) => (
+            <div className="item" key={index}>
+              <p>{item.name}</p>
+              <p className="number">{item.cost}</p>
+              <p>{calculateMonth(item.cost)} months</p>
+            </div>
+          ))}
+          <div className="side-bar">
+            <h2>Settings</h2>
+            <p>Monthly Income</p>
+            <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" whileFocus={{ scale: 1.1 }} />
+            <p>Monthly Expenses</p>
+            <motion.input onChange={(e) => setExpense(e.target.value)} value={expense} placeholder="Montly expenses" whileFocus={{ scale: 1.1 }} />
+            <motion.button onClick={update} disabled={!income || !expense} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Update</motion.button>
           </div>
-        ))}
+        </div>
       </Container>
     )
   } else {

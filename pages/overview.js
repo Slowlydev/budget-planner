@@ -69,19 +69,25 @@ export default function Overview(props) {
           <motion.button onClick={signOut} className="red" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Logout</motion.button>
         </div>
         <h2>Favorites</h2>
-          {favorites.slice(0, 4).map(item => (
-            <div className="item">
-              <p>{item.name}</p>
-              <p className="number">{item.cost}</p>
-            </div>
-          ))}
-          <h2>Recents</h2>
-          {recents.slice(0, 4).map(item => (
-            <div className="item">
-              <p>{item.name}</p>
-              <p className="number">{item.cost}</p>
-            </div>
-          ))}
+        {favorites.map((item, index) => (
+          <div className="item" key={index}>
+            <p>{item.name}</p>
+            <p className="number">{item.cost}</p>
+          </div>
+        ))}
+        {!favorites.length && (
+          <p>no favorites found, go ahead and add some</p>
+        )}
+        <h2>Recents</h2>
+        {recents.slice(0, 3).map((item, index) => (
+          <div className="item" key={index}>
+            <p>{item.name}</p>
+            <p className="number">{item.cost}</p>
+          </div>
+        ))}
+        {!recents.length && (
+          <p>no recenty added items found, go ahead and add some</p>
+        )}
       </Container>
     )
   } else {
