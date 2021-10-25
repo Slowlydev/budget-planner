@@ -69,7 +69,7 @@ export default function Overview(props) {
           </div>
         ))}
         {!favorites.length && (
-          <p>no favorites found, go ahead and add some</p>
+          <p>No favorites found, go ahead and add some</p>
         )}
         <h2>Recents</h2>
         {recents.slice(0, 3).map((item, index) => (
@@ -79,7 +79,7 @@ export default function Overview(props) {
           </div>
         ))}
         {!recents.length && (
-          <p>no recenty added items found, go ahead and add some</p>
+          <p>No recenty added items found, go ahead and add some</p>
         )}
       </Container>
     )

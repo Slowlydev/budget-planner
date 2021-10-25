@@ -79,7 +79,7 @@ export default function wishlist(props) {
     return (
       <Container navbar>
         <h1>Wishlist</h1>
-        <p>Add Items that u would like to get and put then in your budgetlist. Also this is the place where u manage ur wishes/items</p>
+        <p>Add items that u would like to get and put then in your budgetlist. Also this is the place where u manage ur wishes/items</p>
         <motion.button onClick={togglePopup} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Add Item</motion.button>
         {wishlistitems.map(item => (
           <Item session={props.session} item={item} key={item.name} />
