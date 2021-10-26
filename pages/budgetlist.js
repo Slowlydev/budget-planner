@@ -138,7 +138,7 @@ export default function Overview(props) {
                 <div className="splitter" />
                 <motion.input onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }} />
                 <div className="splitter" />
-                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>🗑️</motion.button>
+                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>remove</motion.button>
               </div>
             ))}
             {!expenseArray && (
@@ -192,7 +192,7 @@ export default function Overview(props) {
                 <div className="splitter" />
                 <motion.input onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }} />
                 <div className="splitter" />
-                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>🗑️</motion.button>
+                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>remove</motion.button>
               </div>
             ))}
             {!expenseArray.length && (
