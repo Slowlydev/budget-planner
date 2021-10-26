@@ -109,6 +109,15 @@ export default function Overview(props) {
     setExpenseArray([...expenseArray, { name: "", cost: 0 }]);
   }
 
+  function remove(index) {
+    let tempArray = expenseArray;
+
+    tempArray.splice(index, 1);
+
+    setExpenseArray(tempArray);
+    setExpense(calcAll());
+  }
+
   function calcDiff() {
     return income - expense;
   }
@@ -125,10 +134,11 @@ export default function Overview(props) {
           <div className="col">
             {expenseArray.map((expense, index) => (
               <div className="input-row" key={index}>
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
+                <motion.input onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
                 <div className="splitter" />
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }}
-                />
+                <motion.input onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }} />
+                <div className="splitter" />
+                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>🗑️</motion.button>
               </div>
             ))}
             {!expenseArray && (
@@ -178,10 +188,11 @@ export default function Overview(props) {
           <div className="col">
             {expenseArray.map((expense, index) => (
               <div className="input-row" key={index}>
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
+                <motion.input onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
                 <div className="splitter" />
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }}
-                />
+                <motion.input onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }} />
+                <div className="splitter" />
+                <motion.button className="red smal" onClick={() => remove(index)} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>🗑️</motion.button>
               </div>
             ))}
             {!expenseArray.length && (
