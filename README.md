@@ -34,31 +34,31 @@ upload reactive array
 
 if does not data exisits > first executuon : continue
 
-empty reactive array
-load db into data
-load data into reactive array
+empty reactive array 
+load db into data 
+load data into reactive array 
 
 upload reactive array
 
 ## thoughts during development > dates
 
 ### what do we have?
-date now
-date when item got added 
-duration until we can get it
+date now 
+date when item got added  
+duration until we can get it 
 
 ### what to do?
-clac time
-get time of item added
-add time diff
-get new date
+clac time 
+get time of item added 
+add time diff 
+get new date 
 
-mils of date added
-add duration in mils to <1>
-get date from <2>
-display when
-clac when how many days (
-  get time now
-  get time when getable
-  return diff
-)
+mils of date added 
+add duration in mils to <1> 
+get date from <2> 
+display when 
+clac when how many days ( 
+  get time now 
+  get time when getable 
+  return diff 
+) 
