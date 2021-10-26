@@ -136,6 +136,7 @@ form {
   flex-direction: column;
 
   margin-top: 3.5em;
+  margin-bottom: 3.5em;
 
   margin-left: 10vw;
   margin-right: 10vw;
@@ -213,14 +214,35 @@ form {
     margin-bottom: 0;
   }
 
+  .col {
+    width: 100%;
+  }
+
+  .expense-info {
+    margin: 1em;
+
+    p {
+      line-height: 1em;
+      margin: 0.5em;
+    }
+  }
+
   .input-row {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 
     width: 100%;
 
+    padding-bottom: 1em;
+
     input {
-      width: 50%;
+      margin: 0;
+      width: 200%;
+    }
+
+    .splitter {
+      padding-left: 1em;
     }
   }
 }
@@ -392,7 +414,7 @@ form {
       }
 
       .splitter {
-        padding-left: 0.5em;
+        padding-left: 1em;
       }
     }
   }

@@ -42,6 +42,19 @@ export default function Login() {
       });
   };
 
+  async function sendPasswordEmail() {
+		setErrorMsg("");
+		await firebase
+			.auth()
+			.sendPasswordResetEmail(email)
+			.then(function () {
+				setErrorMsg("Email to reset Password has been sent!")
+			})
+			.catch(function (error) {
+				setErrorMsg(error.message);
+			});
+	}
+
   return (
     <Container>
       <h1>Login</h1>
@@ -59,7 +72,7 @@ export default function Login() {
         </Link>
       </div>
 
-      <a>new password</a>
+      <motion.button onClick={sendPasswordEmail} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Reset Password</motion.button>
 
       {errorMsg && (
         <p>{errorMsg}</p>

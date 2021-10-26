@@ -11,28 +11,52 @@ import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 
 export default function Overview(props) {
-
   const [data, setData] = useState();
 
   const [income, setIncome] = useState("");
   const [expense, setExpense] = useState("");
+  const [expenseArray, setExpenseArray] = useState([]);
 
-  const [expenseArray, setExpenseArray] = useState([{ name: "", cost: 0 }]);
   let totalItemsCost = 0;
 
-  const addTotalCost = (value) => { totalItemsCost = totalItemsCost + value };
+  const addTotalCost = (value) => {
+    totalItemsCost = totalItemsCost + value;
+  };
 
   firebaseClient();
 
+  function load(dataTemp) {
+    const loadArray = [];
+
+    if (dataTemp) {
+      setIncome(dataTemp.montlyIncome);
+
+      for (const item of dataTemp.expenseArray) {
+        loadArray.push(item);
+      }
+      console.log("done loading into loadArray");
+    }
+
+    if (loadArray.length !== 0) {
+      setExpenseArray(loadArray);
+      console.log("loading loadArray into reactive array");
+    }
+  }
+
   useEffect(() => {
-    firebase.database().ref(`users/${props.session}/`).on("value", function (returnedData) {
-      try {
-        setData(returnedData.val());
-        setIncome(returnedData.val().montlyIncome);
-        setExpense(returnedData.val().montlyExpenses);
-        setExpense(returnedData.val().expenseArray);
-      } catch (err) { console.log(err) }
-    });
+    firebase
+      .database()
+      .ref(`users/${props.session}/`)
+      .on("value", function (returnedData) {
+        try {
+          setData(returnedData.val());
+          load(returnedData.val());
+        } catch (err) {
+          console.log(err);
+        }
+      });
+
+    console.log("fetching data");
   }, []);
 
   const items = [];
@@ -57,11 +81,14 @@ export default function Overview(props) {
   }
 
   function updateDB() {
-    firebase.database().ref(`users/${props.session}`).update({
-      montlyIncome: parseFloat(income),
-      montlyExpenses: parseFloat(calcAll()),
-      expenseArray: expenseArray
-    });
+    firebase
+      .database()
+      .ref(`users/${props.session}`)
+      .update({
+        montlyIncome: parseFloat(income),
+        montlyExpenses: parseFloat(calcAll()),
+        expenseArray: expenseArray,
+      });
   }
 
   function calculateMonth(cost) {
@@ -79,6 +106,7 @@ export default function Overview(props) {
     tempArray[index] = tempItem;
 
     setExpenseArray(tempArray);
+    setExpense(calcAll());
   }
 
   function add() {
@@ -86,32 +114,51 @@ export default function Overview(props) {
   }
 
   function calcDiff() {
-    return data.montlyIncome - data.montlyExpenses;
+    return income - expense;
   }
 
   if (props.session && data && data.items) {
     return (
       <Container navbar>
         <h1>Budgetlist</h1>
-        <p>To buy all items in your list u would have to save for {calculateMonth(totalItemsCost)} months!</p>
         <div className="side-bar">
           <h2>Your Budget</h2>
           <p>Monthly Income</p>
-          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step='10' whileFocus={{ scale: 1.1 }} />
+          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step="10" whileFocus={{ scale: 1.1 }} />
           <p>Monthly Expenses</p>
           <div className="col">
             {expenseArray.map((expense, index) => (
               <div className="input-row" key={index}>
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} value={expense.name} placeholder="Montly expense name" whileFocus={{ scale: 1.1 }} />
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder="Montly expense cost" type="number" whileFocus={{ scale: 1.1 }} />
+                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
+                <div className="splitter" />
+                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }}
+                />
               </div>
             ))}
+            {!expenseArray && (
+              <p>no expenses found add one with the button below</p>
+            )}
           </div>
-          <p>Total Montly Expenses: {calcAll()}</p>
-          <p>Amount that u can save: {calcDiff()}</p>
-          <motion.button onClick={add} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Add expense</motion.button>
-          <motion.button onClick={updateDB} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Update</motion.button>
+
+          <div className="expense-info">
+            {!!expense && (
+              <p>Total Montly Expenses: {calcAll()}</p>
+            )}
+            {!!income && !!expense && (
+              <p>Montly "spendable" amount: {calcDiff()}</p>
+            )}
+          </div>
+
+          <motion.button onClick={add} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            Add expense
+          </motion.button>
+          <motion.button disabled={!expense || !income} onClick={updateDB} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            Update
+          </motion.button>
         </div>
+
+        <p>To buy all items in your list u would have to save for {calculateMonth(totalItemsCost)} months!</p>
+
         {items.map((item, index) => (
           <div className="item" key={index}>
             <p>{item.name}</p>
@@ -120,41 +167,52 @@ export default function Overview(props) {
           </div>
         ))}
       </Container>
-    )
-  } else if (data) {
-    return (
-      <Container>
-        <Navbar />
-        <div className="side-bar">
-          <h2>Your Budget</h2>
-          <p>Monthly Income</p>
-          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step='10' whileFocus={{ scale: 1.1 }} />
-          <p>Monthly Expenses</p>
-          <div className="col">
-            {expenseArray.map((expense, index) => (
-              <div className="input-row" key={index}>
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} placeholder="Montly expense name" whileFocus={{ scale: 1.1 }} />
-                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder="Montly expense cost" type="number" whileFocus={{ scale: 1.1 }} />
-              </div>
-            ))}
-          </div>
-          <p>Total Montly Expenses: {calcAll()}</p>
-          <p>Amount that u can save: {calcDiff()}</p>
-          <motion.button onClick={add} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Add expense</motion.button>
-          <motion.button onClick={updateDB} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Update</motion.button>
-        </div>
-        <h1>Loading...</h1>
-        <p>It could be that u dont have any items yet, go to the wishlist and add some :)</p>
-      </Container>
-    )
+    );
   } else {
     return (
       <Container>
         <Navbar />
+        <h1>Budgetlist</h1>
+        <div className="side-bar">
+          <h2>Your Budget</h2>
+          <p>Monthly Income</p>
+          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step="10" whileFocus={{ scale: 1.1 }}
+          />
+          <p>Monthly Expenses</p>
+          <div className="col">
+            {expenseArray.map((expense, index) => (
+              <div className="input-row" key={index}>
+                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "name")} placeholder={expense.name ? expense.name : "Expense Name"} whileFocus={{ scale: 1.1 }} />
+                <div className="splitter" />
+                <motion.input className="fullwidth" onChange={(e) => update(e.target.value, index, "cost")} placeholder={expense.cost ? expense.cost : "Expense Cost"} type="number" whileFocus={{ scale: 1.1 }}
+                />
+              </div>
+            ))}
+            {!expenseArray.length && (
+              <p>no expenses found add one with the button below</p>
+            )}
+          </div>
+
+          <div className="expense-info">
+            {!!expense && (
+              <p>Total Montly Expenses: {calcAll()}</p>
+            )}
+            {!!income && !!expense && (
+              <p>Montly "spendable" amount: {calcDiff()}</p>
+            )}
+          </div>
+
+          <motion.button onClick={add} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            Add expense
+          </motion.button>
+          <motion.button disabled={!expense || !income} onClick={updateDB} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+            Update
+          </motion.button>
+        </div>
         <h1>Loading...</h1>
         <p>It could be that u dont have any items yet, go to the wishlist and add some :)</p>
       </Container>
-    )
+    );
   }
 }
 
