@@ -34,12 +34,10 @@ export default function Overview(props) {
       for (const item of dataTemp.expenseArray) {
         loadArray.push(item);
       }
-      console.log("done loading into loadArray");
     }
 
     if (loadArray.length !== 0) {
       setExpenseArray(loadArray);
-      console.log("loading loadArray into reactive array");
     }
   }
 
@@ -55,8 +53,6 @@ export default function Overview(props) {
           console.log(err);
         }
       });
-
-    console.log("fetching data");
   }, []);
 
   const items = [];
