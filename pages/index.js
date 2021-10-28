@@ -20,7 +20,7 @@ export default function Home() {
       <p>A simple and user-friendly budget planner, to get u an overview about your spending and wishes</p>
       {!user && (
         <div className="text-center">
-          <p>Looks like you're not logged in, create or login to your account here!</p>
+          <p>Looks like you&apos;re not logged in, create or login to your account here!</p>
           <div className="row">
             <Link href="/login">
               <a>
@@ -37,7 +37,7 @@ export default function Home() {
       )}
       {user && (
         <div className="text-center">
-          <p>Looks like you're logged in, wanna sign out or go to the overview?</p>
+          <p>Looks like you&apos;re logged in, wanna sign out or go to the overview?</p>
           <div className="row center">
             <Link href="/overview">
               <a>

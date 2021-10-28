@@ -167,7 +167,7 @@ export default function Budgetlist(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly "spendable" amount: {calcDiff}</p>
+              <p>Montly &quot;spendable&quot; amount: {calcDiff}</p>
             )}
           </div>
 
@@ -235,7 +235,7 @@ export default function Budgetlist(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly "spendable" amount: {calcDiff}</p>
+              <p>Montly &quot;spendable&quot; amount: {calcDiff}</p>
             )}
           </div>
 
