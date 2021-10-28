@@ -43,7 +43,7 @@ upload reactive array
 ## thoughts during development > dates
 
 ### what do we have?
-date now 
+date now  
 date when item got added  
 duration until we can get it 
 

@@ -34,17 +34,13 @@ function Item(props) {
   }
 
   return (
-    <div className="item">
-      <div className="info">
-        <p>{props.item.name}</p>
-        <p className="number">{props.item.cost}</p>
-      </div>
-      <div className="actions">
-        <label>Favorite? <motion.input onChange={(e) => update("favorite", e.target.checked)} checked={favorite} type="checkbox" /></label>
-        <label>Add to Budgetlist? <motion.input onChange={(e) => update("budgetlist", e.target.checked)} checked={inBudgetList} type="checkbox" /></label>
-      </div>
-      <motion.button className="red" onClick={removeItem} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>remove</motion.button>
-    </div>
+    <tr>
+      <td>{props.item.name}</td>
+      <td className="number">{props.item.cost}</td>
+      <td><motion.input onChange={(e) => update("favorite", e.target.checked)} checked={favorite} type="checkbox" /></td>
+      <td><motion.input onChange={(e) => update("budgetlist", e.target.checked)} checked={inBudgetList} type="checkbox" /></td>
+      <td><motion.button className="red" onClick={removeItem} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>remove</motion.button></td>
+    </tr>
   )
 }
 
@@ -81,9 +77,24 @@ export default function wishlist(props) {
         <h1>Wishlist</h1>
         <p>Add items that u would like to get and put then in your budgetlist. Also this is the place where u manage ur wishes/items</p>
         <motion.button onClick={togglePopup} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>Add Item</motion.button>
-        {wishlistitems.map(item => (
-          <Item session={props.session} item={item} key={item.name} />
-        ))}
+
+        <table>
+
+          <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Favorite?</th>
+            <th>Budgetlist?</th>
+            <th>Actions</th>
+          </tr>
+
+          {wishlistitems.map((item, index) => (
+            <Item session={props.session} item={item} key={index} />
+          ))}
+
+        </table>
+
+
         {popup && (
           <Popup toggle={togglePopup} session={props.session} />
         )}

@@ -124,7 +124,7 @@ form {
   font-weight: 600;
   opacity: 80%;
 
-  color: var(--green);
+  color: var(--red);
 
   &:after {
     content: ".-";
@@ -180,6 +180,28 @@ form {
 
   .col {
     align-items: center;
+  }
+}
+
+table {
+  border-collapse: separate;
+  border-spacing: 0 0.5em;
+
+  width: 90%;
+  max-width: 45em;
+
+  padding: 1em;
+  margin: 0.5em;
+
+  border-radius: 0.5em;
+
+  background-color: var(--light-text);
+
+  box-shadow: 0 1.4px 2.7px rgba(0, 0, 0, 0.028),
+    0 4.7px 8.9px rgba(0, 0, 0, 0.042), 0 21px 40px rgba(0, 0, 0, 0.07);
+
+  input {
+    width: min-content;
   }
 }
 
@@ -272,57 +294,6 @@ form {
 
   box-shadow: 0 1.4px 2.7px rgba(0, 0, 0, 0.028),
     0 4.7px 8.9px rgba(0, 0, 0, 0.042), 0 21px 40px rgba(0, 0, 0, 0.07);
-
-  button {
-    margin-right: 0;
-  }
-
-  input {
-    width: max-content;
-  }
-
-  label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-
-    font-size: 0.9em;
-    font-weight: bold;
-
-    color: var(--dark-text);
-
-    input {
-      background: none;
-      box-shadow: none;
-    }
-  }
-
-  .info {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-
-    margin-bottom: 0.5em;
-
-    p {
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-    }
-  }
-
-  .actions {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-
-    margin-bottom: 0.5em;
-
-    label {
-      margin-left: 0.5em;
-      margin-right: 0.5em;
-    }
-  }
 }
 
 .text-center {

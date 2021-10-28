@@ -38,6 +38,7 @@ export default function Overview(props) {
 
     if (loadArray.length !== 0) {
       setExpenseArray(loadArray);
+      setExpense(calcAll(loadArray));
     }
   }
 
@@ -66,10 +67,10 @@ export default function Overview(props) {
     }
   }
 
-  function calcAll() {
+  function calcAll(array) {
     let allCost = 0;
 
-    for (const item of expenseArray) {
+    for (const item of array) {
       allCost = allCost + parseFloat(item.cost);
     }
 
@@ -91,7 +92,7 @@ export default function Overview(props) {
     const sparquote = data.montlyIncome - data.montlyExpenses;
     const nMonate = cost / sparquote;
 
-    return Number.parseFloat(nMonate).toPrecision(2);
+    return nMonate;
   }
 
   function update(value, index, prop) {
@@ -102,7 +103,7 @@ export default function Overview(props) {
     tempArray[index] = tempItem;
 
     setExpenseArray(tempArray);
-    setExpense(calcAll());
+    setExpense(calcAll(tempArray));
   }
 
   function add() {
@@ -115,11 +116,27 @@ export default function Overview(props) {
     tempArray.splice(index, 1);
 
     setExpenseArray(tempArray);
-    setExpense(calcAll());
+    setExpense(calcAll(tempArray));
   }
 
   function calcDiff() {
     return income - expense;
+  }
+
+  function calcDate(itemDate, cost, toggle) {
+
+    const dateAdded = new Date(itemDate).getTime();
+    const dateNow = Date.now();
+    const diffMonths = 2629743000 * calculateMonth(cost);
+
+    const unixWhenGettable = dateAdded + diffMonths;
+    const daysUntilGettable = (unixWhenGettable - dateNow) / 86400000;
+
+    if (toggle) {
+      return new Date(unixWhenGettable).toLocaleDateString()
+    } else {
+      return Number.parseInt(daysUntilGettable)
+    }
   }
 
   if (props.session && data && data.items) {
@@ -148,7 +165,7 @@ export default function Overview(props) {
 
           <div className="expense-info">
             {!!expense && (
-              <p>Total Montly Expenses: {calcAll()}</p>
+              <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
               <p>Montly "spendable" amount: {calcDiff()}</p>
@@ -165,13 +182,27 @@ export default function Overview(props) {
 
         <p>To buy all items in your list u would have to save for {calculateMonth(totalItemsCost)} months!</p>
 
-        {items.map((item, index) => (
-          <div className="item" key={index}>
-            <p>{item.name}</p>
-            <p className="number">{item.cost}</p>
-            <p>{calculateMonth(item.cost)} months</p>
-          </div>
-        ))}
+        <table>
+
+          <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Date Added</th>
+            <th>Date u can buy</th>
+            <th>In Days</th>
+          </tr>
+
+          {items.map((item, index) => (
+            <tr key={index}>
+              <td>{item.name}</td>
+              <td className="number">{item.cost}</td>
+              <td>{new Date(item.dateAdded).toLocaleDateString()}</td>
+              <td>{calcDate(item.dateAdded, item.cost, true)}</td>
+              <td>{calcDate(item.dateAdded, item.cost)}</td>
+            </tr>
+          ))}
+
+        </table>
       </Container>
     );
   } else {
@@ -202,7 +233,7 @@ export default function Overview(props) {
 
           <div className="expense-info">
             {!!expense && (
-              <p>Total Montly Expenses: {calcAll()}</p>
+              <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
               <p>Montly "spendable" amount: {calcDiff()}</p>
