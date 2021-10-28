@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import nookies from "nookies";
-import Link from "next/link";
 
 import { adminApp } from "../firebaseAdmin";
 import firebaseClient from "../firebaseClient";
@@ -10,7 +9,7 @@ import firebase from "firebase/app";
 import Container from "../components/Container";
 import Navbar from "../components/Navbar";
 
-export default function Overview(props) {
+export default function Budgetlist(props) {
   const [data, setData] = useState();
 
   const [income, setIncome] = useState("");
@@ -25,36 +24,36 @@ export default function Overview(props) {
 
   firebaseClient();
 
-  function load(dataTemp) {
-    const loadArray = [];
+  useEffect(() => {
+    function loadInputs(dataTemp) {
+      const loadArray = [];
 
-    if (dataTemp) {
-      setIncome(dataTemp.montlyIncome);
+      if (dataTemp) {
+        setIncome(dataTemp.montlyIncome);
 
-      for (const item of dataTemp.expenseArray) {
-        loadArray.push(item);
+        for (const item of dataTemp.expenseArray) {
+          loadArray.push(item);
+        }
+      }
+
+      if (loadArray.length !== 0) {
+        setExpenseArray(loadArray);
+        setExpense(calcAll(loadArray));
       }
     }
 
-    if (loadArray.length !== 0) {
-      setExpenseArray(loadArray);
-      setExpense(calcAll(loadArray));
-    }
-  }
-
-  useEffect(() => {
     firebase
       .database()
       .ref(`users/${props.session}/`)
       .on("value", function (returnedData) {
         try {
           setData(returnedData.val());
-          load(returnedData.val());
+          loadInputs(returnedData.val());
         } catch (err) {
           console.log(err);
         }
       });
-  }, []);
+  }, [props.session]);
 
   const items = [];
 
@@ -168,7 +167,7 @@ export default function Overview(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly "spendable" amount: {calcDiff()}</p>
+              <p>Montly "spendable" amount: {calcDiff}</p>
             )}
           </div>
 
@@ -236,7 +235,7 @@ export default function Overview(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly "spendable" amount: {calcDiff()}</p>
+              <p>Montly "spendable" amount: {calcDiff}</p>
             )}
           </div>
 

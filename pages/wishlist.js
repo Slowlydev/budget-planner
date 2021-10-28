@@ -55,7 +55,7 @@ export default function wishlist(props) {
 
   useEffect(() => {
     firebase.database().ref(`users/${props.session}/items`).on("value", function (data) { try { setData(data.val()) } catch (err) { console.log(err) } });
-  }, []);
+  }, [props.session]);
 
   const wishlistitems = [];
 

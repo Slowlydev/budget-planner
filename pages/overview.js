@@ -2,15 +2,12 @@ import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import nookies from "nookies";
-import Link from "next/link";
-
 
 import { adminApp } from "../firebaseAdmin";
 import firebaseClient from "../firebaseClient";
 import firebase from "firebase/app";
 
 import Container from "../components/Container";
-import Navbar from "../components/Navbar";
 
 export default function Overview(props) {
 
@@ -22,7 +19,7 @@ export default function Overview(props) {
 
   useEffect(() => {
     firebase.database().ref(`users/${props.session}/items`).on("value", function (data) { try { setData(data.val()) } catch (err) { console.log(err) } });
-  }, []);
+  }, [props.session]);
 
   const favorites = [];
   const recents = [];
