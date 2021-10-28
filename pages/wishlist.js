@@ -44,7 +44,7 @@ function Item(props) {
   )
 }
 
-export default function wishlist(props) {
+export default function Wishlist(props) {
 
   const [data, setData] = useState();
   const [popup, setPopup] = useState(false);

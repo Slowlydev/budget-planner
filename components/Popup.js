@@ -62,8 +62,8 @@ export default function Popup(props) {
           <h1>Add Item</h1>
         </div>
         <div className="body">
-          <motion.input onChange={(e) => setItemName(e.target.value)} type="text" placeholder="Item Name" tabindex="-1" whileFocus={{ scale: 1.1 }} />
-          <motion.input onChange={(e) => setItemCost(e.target.value)} type="number" placeholder="Item Cost" step="10" whileFocus={{ scale: 1.1 }} />
+          <motion.input onChange={(e) => setItemName(e.target.value)} value={itemName} type="text" placeholder="Item Name" tabindex="-1" whileFocus={{ scale: 1.1 }} />
+          <motion.input onChange={(e) => setItemCost(e.target.value)} value={itemCost} type="number" placeholder="Item Cost" step="10" whileFocus={{ scale: 1.1 }} />
           <div className="checks">
             <label>Favorite?<motion.input onChange={(e) => setFavorite(e.target.checked)} checked={favorite} type="checkbox" /></label>
             <label>Add to Budgetlist?<motion.input onChange={(e) => setInBudgetList(e.target.checked)} checked={inBudgetList} type="checkbox" /></label>
