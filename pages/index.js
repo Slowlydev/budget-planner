@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <Container>
-      <h1 className="welcome">Welcome to Budget-planner</h1>
+      <h1 className="welcome">Welcome to Budjet</h1>
       <p>A simple and user-friendly budget planner, to get u an overview about your spending and wishes</p>
       {!user && (
         <div className="text-center">

@@ -6,23 +6,23 @@ export default function Header(props) {
 			<meta charSet="UTF-8" key="charset" />
 			<meta name="viewport" content="width=device-width, initial-scale=1" key="viewport" />
 
-			<title>Budget Planner</title>
+			<title>Budjet</title>
 
 			<meta name="description" content="Plann your montly budget"></meta>
 
-			<meta name="apple-mobile-web-app-title" content="Budget Planner" key="apple-title" />
+			<meta name="apple-mobile-web-app-title" content="Budjet" key="apple-title" />
 
 			<meta name="robots" content="index, follow" />
 
-			<meta property="og:title" content="Budget Planner" />
-			<meta property="og:site_name" content="Budget Planner" />
-			<meta property="og:description" content="Plann your montly budget" />
+			<meta property="og:title" content="Budjet" />
+			<meta property="og:site_name" content="Budjet" />
+			<meta property="og:description" content="Plan your montly budget" />
 			<meta property="og:image" content="/logo.png" />
-			<meta property="og:url" content="https://budget-planner.vercel.app/" />
+			<meta property="og:url" content="https://budjet.vercel.app/" />
 			<meta property="og:type" content="website" />
 
-			<meta name="twitter:title" content="Budget Planner" />
-			<meta name="twitter:description" content="Plann your montly budget" />
+			<meta name="twitter:title" content="Budjet" />
+			<meta name="twitter:description" content="Plan your montly budget" />
 			<meta name="twitter:image" content="/logo.png" />
 
 			<meta name="theme-color" content="#027fff" key="theme-color" />
@@ -32,7 +32,11 @@ export default function Header(props) {
 			<link rel="shortcut icon" type="image/x-icon" href="/logo.png" key="shurtcut-icon" />
 			<link rel="apple-touch-icon" href="/logo.png" key="apple-touch-icon" />
 
-			<link rel="canonical" href="https://budget-planner.vercel.app"></link>
+			<link rel="canonical" href="https://budjet.vercel.app"></link>
+
+			<link rel="manifest" href="/manifest.webmanifest" />
+
+			<meta name="google-site-verification" content="YrJQ8TKThpSU_S4q2WNj7XD56MUXpg3Jkdc5csmrXl0" />
 		</Head>
 	)
 }

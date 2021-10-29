@@ -1,0 +1,16 @@
+{
+  "name": "Budjet",
+  "short_name": "Budjet",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa",
+  "description": "Plan your montly budget",
+  "icons": [
+      {
+          "src": "/logo.png",
+          "sizes": "2000x2000",
+          "type": "image/png"
+      }
+  ]
+}
