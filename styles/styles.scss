@@ -135,11 +135,14 @@ form {
   display: flex;
   flex-direction: column;
 
+  width: 1356px;
+  max-width: 95%;
+
+  margin-left: auto;
+  margin-right: auto;
+
   margin-top: 3.5em;
   margin-bottom: 3.5em;
-
-  margin-left: 10vw;
-  margin-right: 10vw;
 
   text-align: center;
   align-items: center;
@@ -185,7 +188,7 @@ form {
 
 table {
   border-collapse: separate;
-  border-spacing: 0 0.5em;
+  border-spacing: 0.5em 1em;
 
   width: 90%;
   max-width: 45em;
@@ -202,6 +205,17 @@ table {
 
   input {
     width: min-content;
+  }
+
+  button {
+    width: min-content;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  table {
+    transform: scale(0.9);
+    width: 110%;
   }
 }
 
