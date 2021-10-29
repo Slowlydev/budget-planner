@@ -12,8 +12,8 @@ import Navbar from "../components/Navbar";
 export default function Budgetlist(props) {
   const [data, setData] = useState();
 
-  const [income, setIncome] = useState("");
-  const [expense, setExpense] = useState("");
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
   const [expenseArray, setExpenseArray] = useState([]);
 
   let totalItemsCost = 0;
@@ -31,8 +31,10 @@ export default function Budgetlist(props) {
       if (dataTemp) {
         setIncome(dataTemp.montlyIncome);
 
-        for (const item of dataTemp.expenseArray) {
-          loadArray.push(item);
+        if (dataTemp.expenseArray) {
+          for (const item of dataTemp.expenseArray) {
+            loadArray.push(item);
+          }
         }
       }
 
@@ -50,7 +52,7 @@ export default function Budgetlist(props) {
           setData(returnedData.val());
           loadInputs(returnedData.val());
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       });
   }, [props.session]);
@@ -82,7 +84,7 @@ export default function Budgetlist(props) {
       .ref(`users/${props.session}`)
       .update({
         montlyIncome: parseFloat(income),
-        montlyExpenses: parseFloat(calcAll()),
+        montlyExpenses: parseFloat(calcAll(expenseArray)),
         expenseArray: expenseArray,
       });
   }
@@ -138,14 +140,14 @@ export default function Budgetlist(props) {
     }
   }
 
-  if (props.session && data && data.items) {
+  if (props.session && data && data.items && data.montlyIncome && data.montlyExpenses) {
     return (
       <Container navbar>
         <h1>Budgetlist</h1>
         <div className="side-bar">
           <h2>Your Budget</h2>
           <p>Monthly Income</p>
-          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step="10" whileFocus={{ scale: 1.1 }} />
+          <motion.input onChange={(e) => setIncome(e.target.value)} placeholder={income ? income : "Monthly Income"} type="number" step="10" whileFocus={{ scale: 1.1 }} />
           <p>Monthly Expenses</p>
           <div className="col">
             {expenseArray.map((expense, index) => (
@@ -167,7 +169,7 @@ export default function Budgetlist(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly &quot;spendable&quot; amount: {calcDiff}</p>
+              <p>Montly &quot;spendable&quot; amount: {calcDiff()}</p>
             )}
           </div>
 
@@ -183,23 +185,27 @@ export default function Budgetlist(props) {
 
         <table>
 
-          <tr>
-            <th>Name</th>
-            <th>Cost</th>
-            <th>Date Added</th>
-            <th>Date u can buy</th>
-            <th>In Days</th>
-          </tr>
-
-          {items.map((item, index) => (
-            <tr key={index}>
-              <td>{item.name}</td>
-              <td className="number">{item.cost}</td>
-              <td>{new Date(item.dateAdded).toLocaleDateString()}</td>
-              <td>{calcDate(item.dateAdded, item.cost, true)}</td>
-              <td>{calcDate(item.dateAdded, item.cost)}</td>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cost</th>
+              <th>Date Added</th>
+              <th>Date u can buy</th>
+              <th>In Days</th>
             </tr>
-          ))}
+          </thead>
+
+          <tbody>
+            {items.map((item, index) => (
+              <tr key={index}>
+                <td>{item.name}</td>
+                <td className="number">{item.cost}</td>
+                <td>{new Date(item.dateAdded).toLocaleDateString()}</td>
+                <td>{calcDate(item.dateAdded, item.cost, true)}</td>
+                <td>{calcDate(item.dateAdded, item.cost)}</td>
+              </tr>
+            ))}
+          </tbody>
 
         </table>
       </Container>
@@ -212,7 +218,7 @@ export default function Budgetlist(props) {
         <div className="side-bar">
           <h2>Your Budget</h2>
           <p>Monthly Income</p>
-          <motion.input onChange={(e) => setIncome(e.target.value)} value={income} placeholder="Montly Income" type="number" step="10" whileFocus={{ scale: 1.1 }}
+          <motion.input onChange={(e) => setIncome(e.target.value)} placeholder={income ? income : "Monthly Income"} type="number" step="10" whileFocus={{ scale: 1.1 }}
           />
           <p>Monthly Expenses</p>
           <div className="col">
@@ -235,7 +241,7 @@ export default function Budgetlist(props) {
               <p>Total Montly Expenses: {calcAll(expenseArray)}</p>
             )}
             {!!income && !!expense && (
-              <p>Montly &quot;spendable&quot; amount: {calcDiff}</p>
+              <p>Montly &quot;spendable&quot; amount: {calcDiff()}</p>
             )}
           </div>
 
@@ -248,6 +254,7 @@ export default function Budgetlist(props) {
         </div>
         <h1>Loading...</h1>
         <p>It could be that u dont have any items yet, go to the wishlist and add some :)</p>
+        <p>or u maybe need to fil in your expenses/income, or if u did that go ahead and press the upload button</p>
       </Container>
     );
   }

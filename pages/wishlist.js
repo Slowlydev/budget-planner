@@ -80,17 +80,21 @@ export default function Wishlist(props) {
 
         <table>
 
-          <tr>
-            <th>Name</th>
-            <th>Cost</th>
-            <th>Favorite?</th>
-            <th>Budgetlist?</th>
-            <th>Actions</th>
-          </tr>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cost</th>
+              <th>Favorite?</th>
+              <th>Budgetlist?</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-          {wishlistitems.map((item, index) => (
-            <Item session={props.session} item={item} key={index} />
-          ))}
+          <tbody>
+            {wishlistitems.map((item, index) => (
+              <Item session={props.session} item={item} key={index} />
+            ))}
+          </tbody>
 
         </table>
 
