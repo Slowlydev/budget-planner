@@ -37,6 +37,8 @@ export default function Header(props) {
 			<link rel="manifest" href="/manifest.webmanifest" />
 
 			<meta name="google-site-verification" content="YrJQ8TKThpSU_S4q2WNj7XD56MUXpg3Jkdc5csmrXl0" />
+
+			<script async defer data-website-id="dd327634-2225-4265-95b0-ebabc46137b6" src="https://slowly-base.vercel.app/rep.js" />
 		</Head>
 	)
 }
